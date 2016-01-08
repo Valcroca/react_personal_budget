@@ -4,9 +4,16 @@ class Budgets extends React.Component{
     this.state = {budgets: []};
     this.submitBudget = this.submitBudget.bind(this);
   }
+  componentDidMount(){
+    $.ajax({
+      url: '/budgets',
+      type: 'GET',
+    }).success( data => {
+      this.setState({budgets: data.budgets});
+    }); 
+  }
 
   submitBudget(){
-    debugger
     $.ajax({
       url: '/budgets',
       type: 'POST',

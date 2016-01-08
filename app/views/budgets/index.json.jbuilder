@@ -1,4 +1,5 @@
 json.budgets @budgets do |budget|
+  json.id budget.id
   json.name budget.name
-  json.cost budget.cost
+  json.amount budget.amount
 end

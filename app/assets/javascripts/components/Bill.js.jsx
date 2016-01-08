@@ -4,10 +4,12 @@ class Bill extends React.Component{
   }
 
   render(){
+    debugger
     return(<div>
              <div className='card blue-grey darken-1'>
                <div className='card-content white-text'>
                  <span className='card-title'>Bill Name: {this.props.name}</span>
+                 <p>Budget: {this.props.budget}</p>
                  <p>Cost: {this.props.cost}</p>
                </div>
                <div className='card-action'>

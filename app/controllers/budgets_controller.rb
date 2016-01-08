@@ -1,10 +1,12 @@
 class BudgetsController < ApplicationController
   def index
-    @budget = Budget.all
-    render json: {budget: @budget}
+    @budgets = Budget.all
+    render 'index'
   end
 
   def create
+    @budget = Budget.create(budget_params)
+    render 'budget'
   end
 
   private

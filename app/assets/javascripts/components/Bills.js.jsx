@@ -2,7 +2,7 @@ class Bills extends React.Component{
   
   constructor(props){
     super(props);
-    this.state = { bills: [] };
+    this.state = { bills: [] , budgets: []};
     this.submitBill = this.submitBill.bind(this);
     this.submitBudget = this.submitBudget.bind(this);
   }
@@ -12,12 +12,11 @@ class Bills extends React.Component{
       url: '/bills',
       type: 'GET'
     }).success( data => {
-      this.setState({ bills: data.bills });
+      this.setState({ bills: data.bills, budgets: data.budgets });
     });
   }
 
   submitBudget(){
-    debugger
     $.ajax({
       url: '/budgets',
       type: 'POST',
@@ -35,7 +34,7 @@ class Bills extends React.Component{
     $.ajax({
       url: '/bills',
       type: 'POST',
-      data: {bill:{name: this.refs.name.value, cost: this.refs.cost.value}}
+      data: {bill:{name: this.refs.name.value, cost: this.refs.cost.value , budget_id: this.refs.budgetId.value }}
     }).success( data => {
       let bills = this.state.bills;
       bills.push(data.bill);
@@ -54,6 +53,12 @@ class Bills extends React.Component{
   }
 
   render(){
+    let options = this.state.budgets.map(budget => {
+      let key = `option-${budget.id}`;
+      return(
+        <option key={key} value={ budget.id}>{budget.name}</option>
+        )
+    }); 
     let bills = this.state.bills.map( bill =>{
     let key = `bill-${bill.id}`;
     return(<Bill key={key} {...bill} />);
@@ -62,8 +67,13 @@ class Bills extends React.Component{
 
     return( <div className='container'>
               <h1 className='center-text'>Bills</h1>
-              <input placeholder="Add Bill Name Here" ref="name" /><input placeholder="due" ref="cost" />
+              <input placeholder="Add Bill Name Here" ref="name" />
+              <input placeholder="due" ref="cost" />
+              <select className="browser-default" ref='budgetId'>
+                {options}
+              </select>
               <button className="btn" onClick={this.submitBill}>Submit</button>
+
               {bills}
             </div>
            

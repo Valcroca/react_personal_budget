@@ -1,7 +1,8 @@
 class BillsController < ApplicationController
   def index
     @bills = Bill.all.order(created_at: :desc)
-    render json: {bills: @bills}
+    @budgets = Budget.all
+    render 'bills'
   end
 
   def create
@@ -20,6 +21,6 @@ class BillsController < ApplicationController
   private
 
   def bill_params
-    params.require(:bill).permit(:name, :cost)
+    params.require(:bill).permit(:name, :cost, :budget_id)
   end
 end

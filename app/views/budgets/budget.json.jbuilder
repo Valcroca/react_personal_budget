@@ -3,4 +3,3 @@ json.budget do
   json.amount @budget.amount
 end
    
-
